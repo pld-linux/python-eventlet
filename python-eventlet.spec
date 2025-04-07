@@ -1,15 +1,15 @@
 #
 # Conditional build:
-%bcond_without	doc		# Sphinx documentation
+%bcond_with	doc		# Sphinx documentation
 %bcond_with	tests		# unit tests (random timeouts on builders)
 %bcond_without	python2		# CPython 2.x module
-%bcond_without	python3		# CPython 3.x module
+%bcond_with	python3		# CPython 3.x module
 
 Summary:	Highly concurrent networking library for Python 2
 Summary(pl.UTF-8):	Biblioteka sieciowa o dużym stopniu zrównoleglenia dla Pythona 2
 Name:		python-eventlet
 Version:	0.33.1
-Release:	3
+Release:	4
 License:	MIT
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/eventlet/
