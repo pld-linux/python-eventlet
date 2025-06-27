@@ -1,20 +1,21 @@
 #
 # Conditional build:
-%bcond_with	doc		# Sphinx documentation
+%bcond_without	doc		# Sphinx documentation
 %bcond_with	tests		# unit tests (random timeouts on builders)
 %bcond_without	python2		# CPython 2.x module
-%bcond_with	python3		# CPython 3.x module
+%bcond_with	python3		# CPython 3.x module (built from python3-eventlet.spec)
 
 Summary:	Highly concurrent networking library for Python 2
 Summary(pl.UTF-8):	Biblioteka sieciowa o dużym stopniu zrównoleglenia dla Pythona 2
 Name:		python-eventlet
-Version:	0.33.1
-Release:	4
+# keep 0.33.x here for python2 support
+Version:	0.33.3
+Release:	1
 License:	MIT
 Group:		Development/Languages/Python
 #Source0Download: https://pypi.org/simple/eventlet/
 Source0:	https://files.pythonhosted.org/packages/source/e/eventlet/eventlet-%{version}.tar.gz
-# Source0-md5:	538c969ce38b7e8dc09e789adb1aec33
+# Source0-md5:	3a488f65bc4ebeec8141a2a9fbe77955
 URL:		https://pypi.org/project/eventlet/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -42,9 +43,9 @@ BuildRequires:	python3-six >= 1.10.0
 %endif
 %endif
 %if %{with doc}
-BuildRequires:	python3-dns >= 1.15.0
-BuildRequires:	python3-greenlet >= 0.3
-BuildRequires:	sphinx-pdg >= 2
+BuildRequires:	python-dns >= 1.15.0
+BuildRequires:	python-greenlet >= 0.3
+BuildRequires:	sphinx-pdg-2
 %endif
 %if %{with tests}
 # SO_REUSEPORT option for tests.convenience_test.test_socket_reuse
@@ -145,7 +146,8 @@ nosetests-%{py3_ver} tests
 
 %if %{with doc}
 PYTHONPATH=$(pwd) \
-%{__make} -C doc -j1 html
+%{__make} -C doc -j1 html \
+	SPHINXBUILD=sphinx-build-2
 %endif
 
 %install
